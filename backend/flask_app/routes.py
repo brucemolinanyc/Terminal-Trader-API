@@ -1,7 +1,13 @@
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response, current_app
 from flask_app import app
 from app import Account
 from app.util import get_price
+
+UNAUTHORIZED = {"error": "unauthorized", "status_code": 401}
+NOT_FOUND = {"error": "not found", "status_code": 404}
+APP_ERROR = {"error": "application error", "status_code": 500}
+BAD_REQUEST = {"error": "bad request", "status_code": 400}
+
 
 @app.errorhandler(404)
 def error404():
@@ -10,6 +16,29 @@ def error404():
 @app.errorhandler(500) 
 def error500():
     return jsonify({"error": "application error"}), 500
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    if not request.json or 'username' not in request.json or 'password' not in request.json:
+        return jsonify(BAD_REQUEST), 401
+    account = Account.login(request.json['username'], request.json['password'])
+    if not account:
+        return jsonify(UNAUTHORIZED), 401
+    
+    token = encodeAuthToken(account.pk)
+  
+    return jsonify({'status': 'success', 'auth_token': str(token)}) 
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    if not request.json or 'username' not in request.json or 'password_hash' not in request.json:
+        return jsonify(BAD_REQUEST), 401
+    account = Account(username = request.json['username'], password_hash =request.json['password_hash'])
+    account.save()
+    token = encodeAuthToken(account.pk)
+    
+    return jsonify({'status': 'success', 'auth_token': str(token)}) 
 
 #works
 @app.route('/api/price/<ticker>', methods=['GET'])

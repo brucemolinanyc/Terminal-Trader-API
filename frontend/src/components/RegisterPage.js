@@ -18,7 +18,7 @@ class RegistrationPage extends React.Component{
     const username = document.getElementById('username').value
     const password = document.getElementById('password').value
     const confirm = document.getElementById('confirm_password').value
-
+    console.log(username,password, confirm)
     if(password === confirm){
         fetch('http://127.0.0.1:5000/create', {
           method: 'post',
