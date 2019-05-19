@@ -1,7 +1,9 @@
 from flask import jsonify, abort, request, make_response, current_app
 from flask_app import app
 from app import Account
-from app.util import get_price
+from app.util import get_price, hash_password, encodeAuthToken, decodeAuthToken
+import jwt
+import datetime
 
 UNAUTHORIZED = {"error": "unauthorized", "status_code": 401}
 NOT_FOUND = {"error": "not found", "status_code": 404}
@@ -40,11 +42,11 @@ def create():
     if not request.json or 'username' not in request.json or 'password_hash' not in request.json:
         return jsonify(BAD_REQUEST), 401
     account = Account(username = request.json['username'], password_hash =request.json['password_hash'])
+    hashed_pw = Account.set_password(account, request.json['password_hash'])
+    account.set_api_key()
     account.save()
-    # token = encodeAuthToken(account.pk)
-    return jsonify({'status': 'success', 'auth_token': 'token'}) 
-
-    # return jsonify({'status': 'success', 'auth_token': str(token)}) 
+    token = encodeAuthToken(account.pk)
+    return jsonify({'status': 'success', 'auth_token': str(token)}) 
 
 #works
 @app.route('/api/price/<ticker>', methods=['GET'])

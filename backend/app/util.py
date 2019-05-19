@@ -1,5 +1,8 @@
 import hashlib, uuid, random
 import requests
+import jwt 
+import datetime
+
 
 salt = "MYSALT"  # generates a random uuid
 encoded_salt = salt.encode() 
@@ -31,9 +34,19 @@ def get_price(ticker):
         return False
 
 
+def encodeAuthToken(pk):
+    payload = {
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+        'user': pk
+    }
+    token = jwt.encode(payload, 'secret-key', algorithm='HS256')
+    return token
 
-
-    """ WEEK 4 TODO: get price from IEXTrading API """
-    # return ord(ticker[0]) * 5.731
-
-# https://iextrading.com/developer/docs/#getting-started
+def decodeAuthToken(token):
+    try:
+        payload = jwt.decode(token, 'secret-key', algorithm='HS256')
+        return payload
+    except jwt.ExpiredSignatureError:
+        return 'Signature expired. Login please'
+    except jwt.InvalidTokenError:
+        return 'Nice try, invalid token. Login please'
