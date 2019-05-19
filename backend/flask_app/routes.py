@@ -17,7 +17,7 @@ def error404():
 def error500():
     return jsonify({"error": "application error"}), 500
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/127.0.0.1:5000/login', methods=['GET', 'POST'])
 def login():
 
     if not request.json or 'username' not in request.json or 'password' not in request.json:
@@ -26,9 +26,10 @@ def login():
     if not account:
         return jsonify(UNAUTHORIZED), 401
     
-    token = encodeAuthToken(account.pk)
-  
-    return jsonify({'status': 'success', 'auth_token': str(token)}) 
+    # token = encodeAuthToken(account.pk)
+    return jsonify({'status': 'success', 'auth_token': 'token'}) 
+
+    # return jsonify({'status': 'success', 'auth_token': str(token)}) 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
@@ -36,9 +37,10 @@ def create():
         return jsonify(BAD_REQUEST), 401
     account = Account(username = request.json['username'], password_hash =request.json['password_hash'])
     account.save()
-    token = encodeAuthToken(account.pk)
-    
-    return jsonify({'status': 'success', 'auth_token': str(token)}) 
+    # token = encodeAuthToken(account.pk)
+    return jsonify({'status': 'success', 'auth_token': 'token'}) 
+
+    # return jsonify({'status': 'success', 'auth_token': str(token)}) 
 
 #works
 @app.route('/api/price/<ticker>', methods=['GET'])
