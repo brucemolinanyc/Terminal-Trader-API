@@ -19,6 +19,10 @@ class LoginPage extends React.Component{
     const username = document.getElementById('username').value
     const password = document.getElementById('password').value
 
+    if (!username || !password){
+      this.setState({loginError: true})
+    } 
+    
     fetch('http://127.0.0.1:5000/login', {
       method: 'post',
       mode: "cors",
@@ -32,8 +36,9 @@ class LoginPage extends React.Component{
       if (data.auth_token){
         localStorage.setItem('token', data['auth_token'])
       } else {
-        this.setState({loginError: false})
+        this.setState({loginError: true})
     }
+    
     
     if(!!localStorage.token) {
         this.props.history.push('/home')
@@ -60,12 +65,12 @@ class LoginPage extends React.Component{
         }
       `}
       </style>
-      <div> 
-      <div>
-      </div>
+      { this.state.loginError &&  
+        <Segment inverted color='red'>
+          There is an issue with your scredentials - please try again  
+        </Segment>
+      }
   
-      
-      </div>
       <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
      
         <Grid.Column style={{ maxWidth: 450 }}>

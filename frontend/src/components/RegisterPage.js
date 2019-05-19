@@ -7,7 +7,7 @@ class RegistrationPage extends React.Component{
     super()
 
     this.state = {
-      error: false,
+      registerError: false,
     }
   }
 
@@ -18,7 +18,7 @@ class RegistrationPage extends React.Component{
     const password = document.getElementById('password').value
     const confirm = document.getElementById('confirm_password').value
 
-    if(password === confirm){
+    if(username && password && confirm && password === confirm ){
         fetch('http://127.0.0.1:5000/create', {
           method: 'post',
           mode: "cors",
@@ -36,7 +36,7 @@ class RegistrationPage extends React.Component{
         }
       })
     } else {
-      this.setState({error: true})
+      this.setState({registerError: true})
     }
   }
 
@@ -59,9 +59,9 @@ class RegistrationPage extends React.Component{
       }
     `}
     </style>
-      { this.state.error &&  
+      { this.state.registerError &&  
         <Segment inverted color='red'>
-          There is an issue with credentials - please try again  
+          There is an issue with your credentials - please try again  
         </Segment>
       }
   

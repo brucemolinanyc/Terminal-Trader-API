@@ -23,7 +23,7 @@ def error500():
 # def helloWorld():
 #     return jsonify({"test": "hello world"}) 
 
-@app.route('/127.0.0.1:5000/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
 
     if not request.json or 'username' not in request.json or 'password' not in request.json:
@@ -31,7 +31,6 @@ def login():
     account = Account.login(request.json['username'], request.json['password'])
     if not account:
         return jsonify(UNAUTHORIZED), 401
-    
     token = encodeAuthToken(account.pk)
     return jsonify({'status': 'success', 'auth_token': str(token)}) 
 
