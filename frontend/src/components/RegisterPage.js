@@ -1,14 +1,13 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
+import {Reveal, Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-
 
 class RegistrationPage extends React.Component{
   constructor(){
     super()
 
     this.state = {
-      loggedIn: false,
+      error: false,
     }
   }
 
@@ -28,14 +27,16 @@ class RegistrationPage extends React.Component{
             "Access-Control-Allow-Origin": "*"
           },
           body: JSON.stringify({username: username, password_hash: password})
-      }).then(response => console.log(response))
-      //   .then(data => {
-      //   localStorage.setItem('token', data['auth_token'])
+      }).then(response => response.json())
+        .then(data => {
+        localStorage.setItem('token', data['auth_token'])
     
-      //   if(!!localStorage.token) {
-      //     this.props.history.push('/home')
-      //   }
-      // })
+        if(!!localStorage.token) {
+          this.props.history.push('/home')
+        }
+      })
+    } else {
+      this.setState({error: true})
     }
   }
 
@@ -44,7 +45,7 @@ class RegistrationPage extends React.Component{
   render(){
     
     return(
-      <div className='registration-form'>
+    <div className='registration-form'>
     {/*
       Heads up! The styles below are necessary for the correct render of this example.
       You can do same with CSS, the main idea is that all the elements up to the `Grid`
@@ -58,7 +59,13 @@ class RegistrationPage extends React.Component{
       }
     `}
     </style>
-    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+      { this.state.error &&  
+        <Segment inverted color='red'>
+          There is an issue with credentials - please try again  
+        </Segment>
+      }
+  
+      <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='red' textAlign='center'>
             Create an account
@@ -92,7 +99,7 @@ class RegistrationPage extends React.Component{
           Already registered? <Link to="/">Log in</Link>
         </Message>
       </Grid.Column>
-    </Grid>
+    </Grid>   
   </div>
     )
   }
