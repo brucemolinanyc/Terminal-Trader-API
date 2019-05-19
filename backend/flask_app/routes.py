@@ -17,6 +17,10 @@ def error404():
 def error500():
     return jsonify({"error": "application error"}), 500
 
+@app.route("/")
+def helloWorld():
+    return jsonify({"test": "hello world"}) 
+
 @app.route('/127.0.0.1:5000/login', methods=['GET', 'POST'])
 def login():
 

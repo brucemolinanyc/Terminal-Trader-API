@@ -18,21 +18,24 @@ class RegistrationPage extends React.Component{
     const username = document.getElementById('username').value
     const password = document.getElementById('password').value
     const confirm = document.getElementById('confirm_password').value
-    console.log(username,password, confirm)
+
     if(password === confirm){
         fetch('http://127.0.0.1:5000/create', {
           method: 'post',
           mode: "cors",
-          headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin":"*"},
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
           body: JSON.stringify({username: username, password_hash: password})
-      }).then(response => response.json())
-        .then(data => {
-        localStorage.setItem('token', data['auth_token'])
+      }).then(response => console.log(response))
+      //   .then(data => {
+      //   localStorage.setItem('token', data['auth_token'])
     
-        if(!!localStorage.token) {
-          this.props.history.push('/home')
-        }
-      })
+      //   if(!!localStorage.token) {
+      //     this.props.history.push('/home')
+      //   }
+      // })
     }
   }
 

@@ -22,7 +22,10 @@ class LoginPage extends React.Component{
     fetch('http://127.0.0.1:5000/login', {
       method: 'post',
       mode: "cors",
-      headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({username: username, password: password})
   }).then(response => response.json())
     .then(data => {
