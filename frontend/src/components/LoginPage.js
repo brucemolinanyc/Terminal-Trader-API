@@ -41,7 +41,7 @@ class LoginPage extends React.Component{
     
     
     if(!!localStorage.token) {
-        this.props.history.push('/home')
+        this.props.history.push(`/home/${data.api_key}`)
       }
     })
   }

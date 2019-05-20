@@ -37,7 +37,7 @@ def login():
     if not account:
         return jsonify(UNAUTHORIZED), 401
     token = encodeAuthToken(account.pk)
-    return jsonify({'status': 'success', 'auth_token': str(token)}) 
+    return jsonify({'status': 'success', 'auth_token': str(token), 'api_key':account.api_key}) 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
@@ -48,7 +48,7 @@ def create():
     account.set_api_key()
     account.save()
     token = encodeAuthToken(account.pk)
-    return jsonify({'status': 'success', 'auth_token': str(token)}) 
+    return jsonify({'status': 'success', 'auth_token': str(token), 'api_key':account.api_key}) 
 
 #works
 @app.route('/api/price/<ticker>', methods=['GET'])

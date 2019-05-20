@@ -32,7 +32,7 @@ class RegistrationPage extends React.Component{
         localStorage.setItem('token', data['auth_token'])
     
         if(!!localStorage.token) {
-          this.props.history.push('/home')
+          this.props.history.push(`/home/${data.api_key}`)
         }
       })
     } else {
