@@ -7,6 +7,7 @@ from app.position import Position
 from app.trade import Trade
 from app.util import hash_password
 from app.view import View 
+from datetime import datetime
 import json
 
 class Account(ORM):
@@ -77,7 +78,10 @@ class Account(ORM):
         
         for trade in trades:
             one_trade = {}
-            one_trade[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price}
+            ts = int(trade.time)
+            timestamp = datetime.utcfromtimestamp(ts).strftime('%m-%d-%Y %H:%M:%S')
+
+            one_trade[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price, "time": timestamp}
             all_trades.append(one_trade)
         return all_trades
 
@@ -90,7 +94,7 @@ class Account(ORM):
         ticker_trades = Trade.select_many_where("WHERE accounts_pk = ? AND ticker = ?", (self.pk, ticker))
         if ticker_trades:
             for trade in ticker_trades:
-                trades[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price}
+                trades[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price, "time": trade.time}
         return trades
         
 

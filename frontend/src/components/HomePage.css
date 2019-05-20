@@ -1,7 +1,9 @@
-.test{
-    background-color: yellow;
+.positions, .trades{
+    background-color: rgb(225, 225, 225);
+    font-size: 20px;
+    padding: 5px;
     border: 1px solid black;
-    width: 35%;
+    width: 44%;
     margin: 20px;
-    display: inline-block
+    display: inline-block;
 }

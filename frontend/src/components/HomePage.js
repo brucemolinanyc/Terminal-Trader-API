@@ -38,13 +38,33 @@ class HomePage extends React.Component{
     render(){
         const positions = this.state.positions && this.state.positions.map( (el, idx) => {
             const key = Object.keys(el)
-                    return <div className="test">
-                                <div class="content">
-                                    <div class="header">stock:  <font color="blue">{el[key].ticker}</font></div>
-                                    <div class="meta">amount: <font color="orange">{el[key].shares}</font></div>
+                    return <div className="positions">
+                                <div className="content">
+                                    <div className="header">stock: &nbsp;<strong><font color="blue">{el[key].ticker}</font></strong></div>
+                                    <div className="meta">amount: &nbsp;<strong><font color="green">{el[key].shares}</font></strong></div>
                                 </div>
                             </div>
          })
+
+         const trades = this.state.trades && this.state.trades.map( (el, idx) => {
+            const key = Object.keys(el)
+            console.log(el)
+            // console.log(key)
+       
+            return <div className="trades">
+                        <div className="content">
+                            <div className="header">stock: &nbsp;<strong><font color="blue">{el[key].ticker}</font></strong> 
+                            <br></br>
+                            price: ${el[key].price}
+                            </div>
+                            <div className="meta">volume: &nbsp;<strong><font color="green">{el[key].volume}</font></strong>
+                            <br></br>
+                            Date made: {el[key].time}
+                            </div>
+                        </div>
+                    </div>
+    })
+
 
         
         return(
@@ -52,7 +72,7 @@ class HomePage extends React.Component{
             <Navigation/>
 
             <Segment>
-                <Grid columns={2} textAlign='center' container divided stackable>
+                <Grid columns={2} textAlign='center' >
                     <Grid.Column textAlign='center'>
                         <h2>Your Positions</h2>
                         {positions}
@@ -60,14 +80,14 @@ class HomePage extends React.Component{
 
                     <Grid.Column textAlign='center'>
                         <h2>Your Trade History</h2>
-                        configure cards from semantic ui 
+                        {trades}
 
                     </Grid.Column>
                 </Grid>
                 <Divider vertical></Divider>
 
             </Segment>
-            {console.log(this.state.positions)}
+            {console.log(this.state.trades)}
             </div>
         )
     }
