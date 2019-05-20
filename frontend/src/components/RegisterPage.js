@@ -1,5 +1,5 @@
 import React from 'react';
-import {Reveal, Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
+import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 
 class RegistrationPage extends React.Component{

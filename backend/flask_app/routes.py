@@ -23,6 +23,11 @@ def error500():
 # def helloWorld():
 #     return jsonify({"test": "hello world"}) 
 
+@app.route('/user/<id>')
+def user(id):
+        user = Account.one_from_pk(id)
+        return jsonify({"user": user.username, "api":user.api_key})
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
