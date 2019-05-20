@@ -43,15 +43,18 @@ class Account(ORM):
     def get_positions(self):
         view = View()
         positions = Position.select_many_where("WHERE accounts_pk = ?", (self.pk, ))
+
         for position in positions:
             view.positions(self, position)
         return positions
 
     def get_positions_json(self):
-        positions = {}
+        positions = []
         all_positions = Position.select_many_where("WHERE accounts_pk = ?", (self.pk, ))
         for position in all_positions:
-            positions[position.ticker] = {"ticker": position.ticker, "shares": position.shares}
+            posish = {}
+            posish[position.ticker] = {"ticker": position.ticker, "shares": position.shares}
+            positions.append(posish)
         return positions
 
     def get_position_for(self, ticker):
@@ -69,11 +72,13 @@ class Account(ORM):
         return Trade.select_many_where("WHERE accounts_pk = ?", (self.pk, ))
 
     def get_all_trades_json(self):
-        all_trades = {}
+        all_trades = []
         trades = Trade.select_many_where("WHERE accounts_pk = ?", (self.pk, ))      
         
         for trade in trades:
-            all_trades[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price}
+            one_trade = {}
+            one_trade[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price}
+            all_trades.append(one_trade)
         return all_trades
 
     def trades_for(self, ticker):
