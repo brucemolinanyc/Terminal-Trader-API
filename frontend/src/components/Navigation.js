@@ -32,14 +32,14 @@ class Navigation extends React.Component{
   render(){
     return(
     <div className="ui inverted menu huge black">
-        <a className="red item" href="/home"  exact="true">Home</a>
-        <a className="red item" href="/positions" exact="true">Your Positions</a>
-        <a className="red item" href="/stock" exact="true">Stock Prices</a>
-        <a className="red item" href="/transact" exact="true">Transactions</a>
+        <a className="red item" href={`/home/${localStorage.getItem('api')}`}  exact="true">Home</a>
+        <a className="red item" href={`/deposit/${localStorage.getItem('api')}`} exact="true">Deposit $</a>
+        <a className="red item" href={`/buy/${localStorage.getItem('api')}`} exact="true">Buy Stock</a>
+        <a className="red item" href={`/sell/${localStorage.getItem('api')}`} exact="true">Sell Stock</a>
         
         <div className="right menu">
             <div className="item" width={4}>
-                <p><strong className="strong">Username: {this.state.username } <br></br>Account: {this.state.api_key}</strong></p>
+                <p><strong className="strong">Username: {this.state.username} <br></br>Account: {this.state.api_key}</strong></p>
             </div>
 
             <div className="right menu item">

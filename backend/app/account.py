@@ -79,7 +79,7 @@ class Account(ORM):
         for trade in trades:
             one_trade = {}
             ts = int(trade.time)
-            timestamp = datetime.utcfromtimestamp(ts).strftime('%m-%d-%Y %H:%M:%S')
+            timestamp = datetime.utcfromtimestamp(ts).strftime('%m-%d-%Y, %H:%M:%S')
 
             one_trade[trade.pk] = {"ticker": trade.ticker, "volume": trade.volume, "price":trade.price, "time": timestamp}
             all_trades.append(one_trade)

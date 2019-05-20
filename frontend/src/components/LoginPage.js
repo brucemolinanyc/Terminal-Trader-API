@@ -35,6 +35,7 @@ class LoginPage extends React.Component{
     .then(data => {
       if (data.auth_token){
         localStorage.setItem('token', data['auth_token'])
+        localStorage.setItem('api', data['api_key'])
       } else {
         this.setState({loginError: true})
     }
