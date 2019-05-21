@@ -29,12 +29,14 @@ class RegistrationPage extends React.Component{
           body: JSON.stringify({username: username, password_hash: password})
       }).then(response => response.json())
         .then(data => {
-        localStorage.setItem('token', data['auth_token'])
+          localStorage.setItem('token', data['auth_token'])
+          localStorage.setItem('api_key', data['api_key']) 
     
         if(!!localStorage.token) {
           this.props.history.push(`/home/${data.api_key}`)
         }
-      })
+      }
+      )
     } else {
       this.setState({registerError: true})
     }

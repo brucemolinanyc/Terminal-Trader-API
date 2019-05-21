@@ -12,7 +12,7 @@ class BuyStockPage extends React.Component{
         return(
             <div>
                 <Navigation/>
-                {console.log(localStorage.getItem('api'))}
+                {console.log(localStorage.getItem('api_key'))}
                 Buy stock
             </div>
         )

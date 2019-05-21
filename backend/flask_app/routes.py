@@ -26,7 +26,9 @@ def error500():
 @app.route('/user/<id>')
 def user(id):
         user = Account.one_from_pk(id)
-        return jsonify({"user": user.username, "api":user.api_key})
+        if user.balance is None:
+            user.balance = 0 
+        return jsonify({"user": user.username, "balance":user.balance})
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -118,6 +120,8 @@ def deposit(api_key):
         amount = request.json['amount']
         if int(amount) < 0.0:
             raise ValueError
+        if account.balance is None:
+            account.balance = 0 
         account.balance += int(amount)
     except (ValueError, KeyError):
         return jsonify({"error": "bad request"}), 400

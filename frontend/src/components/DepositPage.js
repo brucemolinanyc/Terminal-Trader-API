@@ -6,7 +6,7 @@ class DepositPage extends React.Component{
     
     state = {
             amount: '',
-            balance: null,
+            balance: 0,
             error: null
             }
 
@@ -71,16 +71,13 @@ class DepositPage extends React.Component{
                             <button>Submit</button>
                         </div>
                     </form>
-                    {this.state.error ? failure:success}
-                    
-                </div>
-             
-                
+                    {this.state.error ? failure : success}
+                    {this.state.error !== null && setTimeout(function(){window.location.reload()}, 2500)}
+                </div>                
             </div>
         )
     }
 }
-            // {console.log(localStorage.getItem('api'))}
 
 
 export default DepositPage;

@@ -18,7 +18,7 @@ def schema(dbpath=DBPATH):
                 username VARCHAR(16) NOT NULL,
                 password_hash VARCHAR(128),
                 api_key VARCHAR(128),
-                balance FLOAT
+                balance INTEGER
             );"""
 
         cur.execute(SQL)

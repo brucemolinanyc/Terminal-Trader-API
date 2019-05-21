@@ -8,7 +8,7 @@ class Navigation extends React.Component{
  
   state = {
     username: '',
-    api_key: ''
+    balance: ''
   }
 
   componentDidMount = () => {
@@ -21,7 +21,8 @@ class Navigation extends React.Component{
             Navigations: {"Content-Type": "application/json"},
         })
         .then(response => response.json())
-        .then(data => this.setState({username: data.user.toUpperCase(), api_key: data.api }))
+        // .then(data=>console.log(data))
+        .then(data => this.setState({username: data.user.toUpperCase(), balance: data.balance }))
   }
 
   onClick = () => {
@@ -32,14 +33,20 @@ class Navigation extends React.Component{
   render(){
     return(
     <div className="ui inverted menu huge black">
-        <a className="red item" href={`/home/${localStorage.getItem('api')}`}  exact="true">Home</a>
-        <a className="red item" href={`/deposit/${localStorage.getItem('api')}`} exact="true">Deposit $</a>
-        <a className="red item" href={`/buy/${localStorage.getItem('api')}`} exact="true">Buy Stock</a>
-        <a className="red item" href={`/sell/${localStorage.getItem('api')}`} exact="true">Sell Stock</a>
+        <a className="red item" href={`/home/${localStorage.getItem('api_key')}`}  exact="true">Home</a>
+        <a className="red item" href={`/deposit/${localStorage.getItem('api_key')}`} exact="true">Deposit $</a>
+        <a className="red item" href={`/buy/${localStorage.getItem('api_key')}`} exact="true">Buy Stock</a>
+        <a className="red item" href={`/sell/${localStorage.getItem('api_key')}`} exact="true">Sell Stock</a>
         
         <div className="right menu">
             <div className="item" width={4}>
-                <p><strong className="strong">Username: {this.state.username} <br></br>Account: {this.state.api_key}</strong></p>
+                <p>
+                <strong className="strong">
+                Username: {this.state.username} <br></br>
+                Account: {localStorage.getItem('api_key')} <br></br>
+                <font color="#00ff00">Balance: ${this.state.balance}</font>
+                </strong>
+                </p>
             </div>
 
             <div className="right menu item">
@@ -54,7 +61,7 @@ class Navigation extends React.Component{
 
             <div className="right menu item">
                 <div className="ui primary button" onClick={this.onClick}>
-                Sign Out
+                Sign Out 
                 </div>
             </div>
 
