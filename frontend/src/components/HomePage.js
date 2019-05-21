@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from './Navigation';
-import { Divider, Grid, Segment, Card } from 'semantic-ui-react';
+import { Divider, Grid, Segment} from 'semantic-ui-react';
 import './HomePage.css'
 class HomePage extends React.Component{
 

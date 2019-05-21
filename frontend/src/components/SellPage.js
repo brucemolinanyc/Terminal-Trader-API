@@ -10,7 +10,7 @@ class SellPage extends React.Component{
         return(
             <div>
                 <Navigation/>
-                {console.log(this.props.match.params.id)}
+                {console.log(localStorage.getItem('api'))}
                 Sell stock
             </div>
         )

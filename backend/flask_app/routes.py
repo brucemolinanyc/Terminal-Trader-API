@@ -109,17 +109,18 @@ def balance(api_key):
 @app.route('/api/<api_key>/deposit', methods=['PUT'])
 def deposit(api_key):
     account = Account.authenticate_api(api_key)
+  
     if not account:
         return jsonify({"error": "authentication error"}), 401
     if not request.json:
         return jsonify({"error": "bad request"}), 400
     try:
         amount = request.json['amount']
-        if amount < 0.0:
+        if int(amount) < 0.0:
             raise ValueError
-        account.balance += amount
+        account.balance += int(amount)
     except (ValueError, KeyError):
-        return jsonify({"error": "bad reuqest"}), 400
+        return jsonify({"error": "bad request"}), 400
     account.save()
     return jsonify({"username": account.username, "balance": account.balance})
 
