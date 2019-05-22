@@ -49,7 +49,7 @@ class DepositPage extends React.Component{
     render(){
         const success = this.state.error === false &&
             <div className="success">
-               <p>Your Deposit was successful. Your balance is now ${this.state.balance}</p>
+               <p>Your Deposit was successful. Your balance is now ${this.state.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
             </div>
         
         const failure = this.state.error === true &&
