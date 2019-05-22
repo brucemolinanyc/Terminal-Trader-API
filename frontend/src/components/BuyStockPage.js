@@ -34,24 +34,29 @@ class BuyStockPage extends React.Component{
         e.preventDefault()
         const api_key = localStorage.getItem('api_key')
         let ticker = this.state.ticker
-        let amount = this.state.amount
-
-        fetch(`http://127.0.0.1:5000/api/${api_key}/buy/${ticker}/${amount}`, {
-            method: 'post',
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*"},
-            body: JSON.stringify({amount: amount, ticker:ticker})
-        }).then(response => response.json())
-        .then(data => {
-            if (data.balance){
-                this.setState({balance: data.balance, error: false})
-            } else if (data.error){
-                this.setState({error: true})
-                }
-            }
-        )}
+        let amount = Number(this.state.amount)
+        console.log(Number.isInteger(amount))
+        if (Number.isInteger(amount)){
+                fetch(`http://127.0.0.1:5000/api/${api_key}/buy/${ticker}/${amount}`, {
+                    method: 'post',
+                    mode: "cors",
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"},
+                    body: JSON.stringify({amount: amount, ticker:ticker})
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.balance){
+                        this.setState({balance: data.balance, error: false})
+                    } else if (data.error){
+                        this.setState({error: true})
+                        }
+                    })
+        } else{
+            this.setState({error:true})
+        }
+    }
+       
     
     render(){
         let {symbol, date, open, high, low} = this.state.symbol
@@ -65,7 +70,7 @@ class BuyStockPage extends React.Component{
 
         const success = this.state.error === false &&
             <div className="success">
-               <p>Your Deposit was successful. Your balance is now ${this.state.balance}</p>
+               <p>Your Stock purchase was successful. Your balance is now ${this.state.balance}</p>
             </div>
         
         const failure = this.state.error === true &&

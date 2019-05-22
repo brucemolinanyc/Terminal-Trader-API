@@ -105,7 +105,7 @@ class Account(ORM):
         position = self.get_position_for(ticker)
     
         trade = Trade(accounts_pk = self.pk, ticker=ticker, price=current_price, volume = amount)
-        self.balance -= total_cost
+        self.balance -= int(total_cost)
         position.shares += int(amount)
         position.save()
         trade.save()

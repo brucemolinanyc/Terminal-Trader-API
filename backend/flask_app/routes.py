@@ -128,26 +128,6 @@ def deposit(api_key):
     account.save()
     return jsonify({"username": account.username, "balance": account.balance})
 
-@app.route('/api/<api_key>/buy/<ticker>/<amount>', methods=['POST'])
-def buy(api_key, ticker, amount):
-    account = Account.authenticate_api(api_key)
-    price = get_price(ticker)[1]
-    purchase = int(amount) * int(price)
-    if not account:
-        return jsonify({"error": "authentication error"}), 401
-    if not price:
-        return jsonify({ "error": "bad ticker data"})
-    if not request.json:
-        return jsonify({"error": "bad request"}), 400
-    try:
-        if request.json['amount'] and request.json['ticker']:
-            if account.balance > purchase:
-                account.buy(ticker, int(amount), int(price), purchase)
-    except (ValueError, KeyError):
-        return jsonify({"error": "bad request"}), 400
-    return jsonify({"username": account.username, "balance": account.balance})
-
-
 @app.route('/api/<api_key>/sell/<ticker>/<amount>', methods=['POST'])
 def sell(api_key, ticker, amount):
     account = Account.authenticate_api(api_key) 
@@ -167,7 +147,37 @@ def sell(api_key, ticker, amount):
     except (ValueError, KeyError):
         return jsonify({"error": "bad request"}), 400
     return jsonify({"username": account.username, "balance": account.balance})
-            
+
+@app.route('/api/<api_key>/buy/<ticker>/<amount>', methods=['POST'])
+def buy(api_key, ticker, amount):
+    account = Account.authenticate_api(api_key)
+    price = get_price(ticker)[1]
+
+    print('price', type(price), price)
+    # print('purchase', int(amount) * int(price[1]))
+    # print('json amount', request.json['amount'])
+    # print('json ticker', request.json['ticker'])
+    # input()
+
+    purchase = int(amount) * price
+    if request.json['amount'] and request.json['ticker'] and account.balance > int(purchase):
+        account.buy(ticker, amount, price, purchase)
+        return jsonify({"username": account.username, "balance": account.balance})
+    else:
+        return jsonify({ "error": "bad ticker data"})
+    if account.balance < purchase:
+        return jsonify({"error": "bad request"}), 400
+    if not account:
+        return jsonify({"error": "authentication error"}), 401
+    if not request.json:
+        return jsonify({"error": "bad request"}), 400
+    
+    # if request.json['amount'] and request.json['ticker'] and account.balance > purchase:
+    #     account.buy(ticker, int(amount), int(price), purchase)
+    #     return jsonify({"username": account.username, "balance": account.balance})
+    # elif account.balance < purchase:
+    #     return jsonify({"error": "bad request"}), 400
+           
 @app.route('/api/accounts', methods=['GET'])
 def accounts():
     accounts_dic = {}
