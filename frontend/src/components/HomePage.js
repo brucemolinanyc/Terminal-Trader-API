@@ -36,12 +36,14 @@ class HomePage extends React.Component{
     render(){
         const positions = this.state.positions && this.state.positions.map( (el, idx) => {
             const key = Object.keys(el)
+            if(el[key].shares > 0){
                     return <div className="positions" >
                                 <div className="content">
                                     <div className="header">stock: &nbsp;<strong><font color="blue">{el[key].ticker}</font></strong></div>
                                     <div className="meta">amount: &nbsp;<strong><font color="green">{el[key].shares}</font></strong></div>
                                 </div>
                             </div>
+            }
          })
 
          const trades = this.state.trades && this.state.trades.map( (el, idx) => {

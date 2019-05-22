@@ -96,7 +96,7 @@ class SellPage extends React.Component{
 
         const success = this.state.error === false &&
             <div className="success">
-               <p>Your Stock purchase was successful. Your balance is now ${this.state.balance}</p>
+               <p>Your Stock sale was successful. Your balance is now ${this.state.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
             </div>
         
         const failure = this.state.error === true &&

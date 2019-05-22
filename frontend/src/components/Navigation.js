@@ -21,8 +21,7 @@ class Navigation extends React.Component{
             Navigations: {"Content-Type": "application/json"},
         })
         .then(response => response.json())
-        // .then(data=>console.log(data))
-        .then(data => this.setState({username: data.user.toUpperCase(), balance: data.balance }))
+        .then(data => this.setState({username: data.user.toUpperCase(), balance: data.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }))
   }
 
   onClick = () => {
