@@ -26,16 +26,16 @@ class BuyStockPage extends React.Component{
     onStockInputClick = (e) => {
         e.preventDefault()
         fetch(`https://api.iextrading.com/1.0/stock/${this.state.ticker}/previous`)
-        .then(response => response.json())
+        .then(response => response.status == 404 ? this.setState({error: true}) : response.json()
         .then(data => this.setState({symbol: data}))
-    }
+        )}
 
     handleSubmit = (e) => {
         e.preventDefault()
         const api_key = localStorage.getItem('api_key')
         let ticker = this.state.ticker
         let amount = Number(this.state.amount)
-        console.log(Number.isInteger(amount))
+       
         if (Number.isInteger(amount)){
                 fetch(`http://127.0.0.1:5000/api/${api_key}/buy/${ticker}/${amount}`, {
                     method: 'post',

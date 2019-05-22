@@ -152,12 +152,8 @@ def sell(api_key, ticker, amount):
 def buy(api_key, ticker, amount):
     account = Account.authenticate_api(api_key)
     price = get_price(ticker)[1]
-
-    print('price', type(price), price)
-    # print('purchase', int(amount) * int(price[1]))
-    # print('json amount', request.json['amount'])
-    # print('json ticker', request.json['ticker'])
-    # input()
+    if not price:
+        return jsonify({ "error": "bad ticker data"})
 
     purchase = int(amount) * price
     if request.json['amount'] and request.json['ticker'] and account.balance > int(purchase):
