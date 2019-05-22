@@ -1,6 +1,7 @@
 from flask import jsonify, abort, request, make_response, current_app
 from flask_app import app
 from app import Account
+from app import Position
 from app.util import get_price, hash_password, encodeAuthToken, decodeAuthToken
 import jwt
 import datetime
@@ -132,21 +133,21 @@ def deposit(api_key):
 def sell(api_key, ticker, amount):
     account = Account.authenticate_api(api_key) 
     position = account.get_position_for(ticker)
-    # ticker, ticker_price = get_price(ticker)[0], get_price(ticker)[1]  
-    # cash = integer(ticker_price) * amount 
-    if not account:
-        return jsonify({"error": "authentication error"}), 401
-    if not ticker:
-        return jsonify({ "error": "bad ticker data"})
-    if not request.json:
+
+    if request.json['amount'] and request.json['ticker'] and (position.shares >= int(amount)):
+        account.sell(ticker, amount)
+        return jsonify({"username": account.username, "balance": account.balance})
+    else:
         return jsonify({"error": "bad request"}), 400
-    try:
-        if request.json['amount'] and request.json['ticker']:
-            if position.shares > int(amount):
-                account.sell(ticker, amount)
-    except (ValueError, KeyError):
-        return jsonify({"error": "bad request"}), 400
-    return jsonify({"username": account.username, "balance": account.balance})
+    # if not account:
+    #     return jsonify({"error": "authentication error"}), 401
+    # if not ticker:
+    #     return jsonify({ "error": "bad ticker data"})
+    # if not request.json:
+    #     return jsonify({"error": "bad request"}), 400
+
+    
+    
 
 @app.route('/api/<api_key>/buy/<ticker>/<amount>', methods=['POST'])
 def buy(api_key, ticker, amount):

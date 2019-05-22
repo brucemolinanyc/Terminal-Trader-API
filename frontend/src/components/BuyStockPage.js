@@ -101,7 +101,7 @@ class BuyStockPage extends React.Component{
                             <br></br><br></br>
 
                             <div>
-                               { this.state.amount && <p>Confirm purchase of ${this.state.amount} shares of {symbol} for ${this.state.amount && Number((this.state.amount * open).toFixed(2))} </p>} 
+                               { this.state.amount && <p>Confirm purchase of {this.state.amount} shares of {symbol} for ${this.state.amount && Number((this.state.amount * open).toFixed(2))} </p>} 
                             </div>
 
                             <div className="button">
