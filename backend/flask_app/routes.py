@@ -20,10 +20,6 @@ def error404():
 def error500():
     return jsonify({"error": "application error"}), 500
 
-@app.route("/")
-def helloWorld():
-    return jsonify({"test": "hello world"}) 
-
 @app.route('/user/<id>')
 def user(id):
         user = Account.one_from_pk(id)
@@ -31,7 +27,7 @@ def user(id):
             user.balance = 0 
         return jsonify({"user": user.username, "balance":user.balance})
 
-@app.route('https://terminal-trader.netlify.com/68.183.106.71/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if not request.json or 'username' not in request.json or 'password' not in request.json:
         return jsonify(BAD_REQUEST), 401
