@@ -31,7 +31,7 @@ def user(id):
             user.balance = 0 
         return jsonify({"user": user.username, "balance":user.balance})
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('68.183.106.71/login', methods=['GET', 'POST'])
 def login():
 
     if not request.json or 'username' not in request.json or 'password' not in request.json:
