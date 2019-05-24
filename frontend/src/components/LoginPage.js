@@ -23,7 +23,7 @@ class LoginPage extends React.Component{
       this.setState({loginError: true})
     } 
     
-    fetch('https://terminal-trader.netlify.com/68.183.106.71/login', {
+    fetch('test', {
       method: 'post',
       mode: "cors",
       headers: {
