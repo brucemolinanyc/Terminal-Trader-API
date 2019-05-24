@@ -18,7 +18,7 @@ class SellPage extends React.Component{
     componentDidMount = () => {
         const api_key = localStorage.getItem('api_key')
     
-        fetch(`http://localhost:5000/api/${api_key}/positions`,{
+        fetch(`68.183.106.71/api/${api_key}/positions`,{
                 method: 'get',
                 mode: 'cors',
                 Navigations: {"Content-Type": "application/json"},
@@ -51,7 +51,7 @@ class SellPage extends React.Component{
         let amount = Number(this.state.amount)
        
         if (Number.isInteger(amount)){
-                fetch(`http://127.0.0.1:5000/api/${api_key}/sell/${ticker}/${amount}`, {
+                fetch(`68.183.106.71/api/${api_key}/sell/${ticker}/${amount}`, {
                     method: 'post',
                     mode: "cors",
                     headers: {

@@ -15,7 +15,7 @@ class Navigation extends React.Component{
     const token = localStorage.getItem('token')
     var decoded = jwt_decode(token)
 
-    fetch(`http://localhost:5000/user/${decoded.user}`,{
+    fetch(`68.183.106.71/user/${decoded.user}`,{
             method: 'get',
             mode: 'cors',
             Navigations: {"Content-Type": "application/json"},

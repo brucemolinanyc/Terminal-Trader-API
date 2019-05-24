@@ -20,7 +20,7 @@ class DepositPage extends React.Component{
         const amount = this.state.amount
         const api_key = localStorage.getItem('api_key')
 
-        fetch(`http://127.0.0.1:5000/api/${api_key}/deposit`, {
+        fetch(`68.183.106.71/api/${api_key}/deposit`, {
             method: 'put',
             mode: "cors",
             headers: {

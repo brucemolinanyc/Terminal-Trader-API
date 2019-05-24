@@ -37,7 +37,7 @@ class BuyStockPage extends React.Component{
         let amount = Number(this.state.amount)
        
         if (Number.isInteger(amount)){
-                fetch(`http://127.0.0.1:5000/api/${api_key}/buy/${ticker}/${amount}`, {
+                fetch(`http://68.183.106.71/api/${api_key}/buy/${ticker}/${amount}`, {
                     method: 'post',
                     mode: "cors",
                     headers: {

@@ -23,7 +23,7 @@ class LoginPage extends React.Component{
       this.setState({loginError: true})
     } 
     
-    fetch('http://127.0.0.1:5000/login', {
+    fetch('68.183.106.71/login', {
       method: 'post',
       mode: "cors",
       headers: {

@@ -12,7 +12,7 @@ class HomePage extends React.Component{
     componentDidMount = () => {
         const api_key = this.props.match.params.id
 
-        fetch(`http://127.0.0.1:5000/api/${api_key}/positions`, {
+        fetch(`68.183.106.71/api/${api_key}/positions`, {
             method: 'get',
             mode: "cors",
             headers: {
@@ -22,7 +22,7 @@ class HomePage extends React.Component{
         }).then(response => response.json())
         .then(data => this.setState({positions: [data.positions][0]}))
 
-        fetch(`http://127.0.0.1:5000/api/${api_key}/alltrades`, {
+        fetch(`68.183.106.71/api/${api_key}/alltrades`, {
             method: 'get',
             mode: "cors",
             headers: {
