@@ -31,7 +31,7 @@ class LoginPage extends React.Component{
         "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({username: username, password: password})
-  }).then(response => console.log(response, response))
+  }).then(response => console.log(response))
     // .then(data => { 
     //   if (data.auth_token){
     //     localStorage.setItem('token', data['auth_token'])
