@@ -32,19 +32,7 @@ class LoginPage extends React.Component{
       },
       body: JSON.stringify({username: username, password: password})
   }).then(response => console.log(response))
-    // .then(data => { 
-    //   if (data.auth_token){
-    //     localStorage.setItem('token', data['auth_token'])
-    //     localStorage.setItem('api_key', data['api_key'])
-    //   } else {
-    //     this.setState({loginError: true})
-    // }
-      
-    // if(!!localStorage.token) {
-    //     this.props.history.push(`/home/${data['api_key']}`)
-    //   }
-    }
-    )
+  
   }
 
   render(){
