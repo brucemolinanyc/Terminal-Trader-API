@@ -12,7 +12,7 @@ class HomePage extends React.Component{
     componentDidMount = () => {
         const api_key = this.props.match.params.id
 
-        fetch(`68.183.106.71/api/${api_key}/positions`, {
+        fetch(`http://68.183.106.71/api/${api_key}/positions`, {
             method: 'get',
             mode: "cors",
             headers: {

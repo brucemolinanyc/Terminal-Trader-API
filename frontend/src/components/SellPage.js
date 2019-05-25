@@ -18,7 +18,7 @@ class SellPage extends React.Component{
     componentDidMount = () => {
         const api_key = localStorage.getItem('api_key')
     
-        fetch(`68.183.106.71/api/${api_key}/positions`,{
+        fetch(`http://68.183.106.71/api/${api_key}/positions`,{
                 method: 'get',
                 mode: 'cors',
                 Navigations: {"Content-Type": "application/json"},
