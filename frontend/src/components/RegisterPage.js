@@ -19,7 +19,7 @@ class RegistrationPage extends React.Component{
     const confirm = document.getElementById('confirm_password').value
 
     if(username && password && confirm && password === confirm ){
-        fetch('68.183.106.71/create', {
+        fetch('http://68.183.106.71/create', {
           method: 'post',
           mode: "cors",
           headers: {

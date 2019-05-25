@@ -22,7 +22,7 @@ class HomePage extends React.Component{
         }).then(response => response.json())
         .then(data => this.setState({positions: [data.positions][0]}))
 
-        fetch(`68.183.106.71/api/${api_key}/alltrades`, {
+        fetch(`http://68.183.106.71/api/${api_key}/alltrades`, {
             method: 'get',
             mode: "cors",
             headers: {

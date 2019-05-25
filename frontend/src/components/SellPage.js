@@ -51,7 +51,7 @@ class SellPage extends React.Component{
         let amount = Number(this.state.amount)
        
         if (Number.isInteger(amount)){
-                fetch(`68.183.106.71/api/${api_key}/sell/${ticker}/${amount}`, {
+                fetch(`http://68.183.106.71/api/${api_key}/sell/${ticker}/${amount}`, {
                     method: 'post',
                     mode: "cors",
                     headers: {
