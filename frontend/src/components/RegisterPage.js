@@ -1,6 +1,9 @@
 import React from 'react';
 import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
+import baseURL from '../util/utilities'
+// const baseURL = ''
+
 
 class RegistrationPage extends React.Component{
   constructor(){
@@ -19,7 +22,7 @@ class RegistrationPage extends React.Component{
     const confirm = document.getElementById('confirm_password').value
 
     if(username && password && confirm && password === confirm ){
-        fetch('http://68.183.106.71/create', {
+        fetch( baseURL + '/create', {
           method: 'post',
           mode: "cors",
           headers: {

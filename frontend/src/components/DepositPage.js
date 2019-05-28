@@ -2,6 +2,9 @@ import React from 'react';
 import Navigation from './Navigation';
 // import {Button, Form, Message, Icon, Container} from 'semantic-ui-react';
 import './DepositPage.css'
+import baseURL from '../util/utilities'
+// const baseURL = ''
+
 class DepositPage extends React.Component{
     
     state = {
@@ -20,7 +23,7 @@ class DepositPage extends React.Component{
         const amount = this.state.amount
         const api_key = localStorage.getItem('api_key')
 
-        fetch(`http://68.183.106.71/api/${api_key}/deposit`, {
+        fetch(baseURL + `/api/${api_key}/deposit`, {
             method: 'put',
             mode: "cors",
             headers: {

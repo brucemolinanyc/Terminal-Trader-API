@@ -1,6 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import baseURL from '../util/utilities'
+// const baseURL = ''
+
 
 import './Navigation.css';
 
@@ -15,7 +18,7 @@ class Navigation extends React.Component{
     const token = localStorage.getItem('token')
     var decoded = jwt_decode(token)
 
-    fetch(`http://68.183.106.71/user/${decoded.user}`,{
+    fetch(baseURL + `/user/${decoded.user}`,{
             method: 'get',
             mode: 'cors',
             Navigations: {"Content-Type": "application/json"},

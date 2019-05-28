@@ -2,6 +2,9 @@ import React from 'react';
 import Navigation from './Navigation';
 import { Input } from 'semantic-ui-react';
 import jwt_decode from 'jwt-decode';
+import  baseURL from '../util/utilities'
+// const baseURL = ''
+
 
 class SellPage extends React.Component{
 
@@ -18,7 +21,7 @@ class SellPage extends React.Component{
     componentDidMount = () => {
         const api_key = localStorage.getItem('api_key')
     
-        fetch(`http://68.183.106.71/api/${api_key}/positions`,{
+        fetch(baseURL + `/api/${api_key}/positions`,{
                 method: 'get',
                 mode: 'cors',
                 Navigations: {"Content-Type": "application/json"},
@@ -51,7 +54,7 @@ class SellPage extends React.Component{
         let amount = Number(this.state.amount)
        
         if (Number.isInteger(amount)){
-                fetch(`http://68.183.106.71/api/${api_key}/sell/${ticker}/${amount}`, {
+                fetch(baseURL + `/api/${api_key}/sell/${ticker}/${amount}`, {
                     method: 'post',
                     mode: "cors",
                     headers: {

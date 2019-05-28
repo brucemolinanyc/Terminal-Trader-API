@@ -11,7 +11,6 @@ NOT_FOUND = {"error": "not found", "status_code": 404}
 APP_ERROR = {"error": "application error", "status_code": 500}
 BAD_REQUEST = {"error": "bad request", "status_code": 400}
 
-
 @app.errorhandler(404)
 def error404():
     return jsonify({"error": "404 not found"}), 404 
@@ -19,7 +18,7 @@ def error404():
 @app.errorhandler(500) 
 def error500():
     return jsonify({"error": "application error"}), 500
-
+    
 @app.route('/user/<id>')
 def user(id):
         user = Account.one_from_pk(id)
@@ -181,3 +180,8 @@ def accounts():
             "api-key": account.api_key
         }
     return jsonify({"accounts": accounts_dic})
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def react_path(path):
+    return app.send_static_file('index.html')

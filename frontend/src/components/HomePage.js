@@ -2,6 +2,9 @@ import React from 'react';
 import Navigation from './Navigation';
 import { Divider, Grid, Segment} from 'semantic-ui-react';
 import './HomePage.css'
+import baseURL from '../util/utilities.js'
+// const baseURL = ''
+
 class HomePage extends React.Component{
 
     state = {
@@ -12,7 +15,7 @@ class HomePage extends React.Component{
     componentDidMount = () => {
         const api_key = this.props.match.params.id
 
-        fetch(`http://68.183.106.71/api/${api_key}/positions`, {
+        fetch(baseURL + `/api/${api_key}/positions`, {
             method: 'get',
             mode: "cors",
             headers: {
@@ -22,7 +25,7 @@ class HomePage extends React.Component{
         }).then(response => response.json())
         .then(data => this.setState({positions: [data.positions][0]}))
 
-        fetch(`http://68.183.106.71/api/${api_key}/alltrades`, {
+        fetch( baseURL + `/api/${api_key}/alltrades`, {
             method: 'get',
             mode: "cors",
             headers: {

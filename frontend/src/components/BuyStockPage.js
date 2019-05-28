@@ -1,6 +1,8 @@
 import React from 'react';
 import Navigation from './Navigation';
 import { Input } from 'semantic-ui-react';
+import baseURL from '../util/utilities'
+// const baseURL = ''
 
 class BuyStockPage extends React.Component{
 
@@ -37,7 +39,7 @@ class BuyStockPage extends React.Component{
         let amount = Number(this.state.amount)
        
         if (Number.isInteger(amount)){
-                fetch(`http://68.183.106.71/api/${api_key}/buy/${ticker}/${amount}`, {
+                fetch(baseURL + `/api/${api_key}/buy/${ticker}/${amount}`, {
                     method: 'post',
                     mode: "cors",
                     headers: {

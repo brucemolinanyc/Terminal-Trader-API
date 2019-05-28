@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import {Link} from 'react-router-dom';
-
+import baseURL from '../util/utilities'
+// const baseURL = ''
 
 
 class LoginPage extends React.Component{
@@ -23,7 +24,7 @@ class LoginPage extends React.Component{
       this.setState({loginError: true})
     } 
     
-    fetch('http://68.183.106.71/login', {
+    fetch(baseURL + '/login', {
       method: 'post',
       mode: "cors",
       headers: {
