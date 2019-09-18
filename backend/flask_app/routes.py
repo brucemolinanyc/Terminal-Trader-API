@@ -130,7 +130,7 @@ def sell(api_key, ticker, amount):
 
     if request.json['amount'] and request.json['ticker'] and (position.shares >= int(amount)):
         account.sell(ticker, amount)
-        return jsonify({"username": account.username, "balance": account.balance})
+        return jsonify({"username": account.username, "balance": round(account.balance)})
     else:
         return jsonify({"error": "bad request"}), 400
     # if not account:
@@ -146,22 +146,24 @@ def sell(api_key, ticker, amount):
 @app.route('/api/<api_key>/buy/<ticker>/<amount>', methods=['POST'])
 def buy(api_key, ticker, amount):
     account = Account.authenticate_api(api_key)
-    price = get_price(ticker)[1]
-    if not price:
+    price = round(get_price(ticker)[1])
+    purchase = int(amount) * price
+
+    if account.balance == None or account.balance < purchase:
+        return jsonify({"error": "bad request"})
+    elif not price:
         return jsonify({ "error": "bad ticker data"})
 
-    purchase = int(amount) * price
     if request.json['amount'] and request.json['ticker'] and account.balance > int(purchase):
         account.buy(ticker, amount, price, purchase)
-        return jsonify({"username": account.username, "balance": account.balance})
+        return jsonify({"username": account.username, "balance": round(account.balance)})
     else:
         return jsonify({ "error": "bad ticker data"})
-    if account.balance < purchase:
-        return jsonify({"error": "bad request"}), 400
+   
     if not account:
         return jsonify({"error": "authentication error"}), 401
-    if not request.json:
-        return jsonify({"error": "bad request"}), 400
+    # if not request.json:
+    #     return jsonify({"error": "bad request"}), 400
     
     # if request.json['amount'] and request.json['ticker'] and account.balance > purchase:
     #     account.buy(ticker, int(amount), int(price), purchase)

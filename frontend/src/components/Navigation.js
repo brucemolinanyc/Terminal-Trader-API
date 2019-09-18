@@ -24,7 +24,7 @@ class Navigation extends React.Component{
             Navigations: {"Content-Type": "application/json"},
         })
         .then(response => response.json())
-        .then(data => this.setState({username: data.user.toUpperCase(), balance: data.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }))
+        .then(data => this.setState({username: data.user.toUpperCase(), balance: Math.round(data.balance)}))
   }
 
   onClick = () => {
@@ -51,15 +51,6 @@ class Navigation extends React.Component{
                 </p>
             </div>
 
-            <div className="right menu item">
-                <div className="ui icon input">
-                    <input type="text" placeholder="Search..." />
-                    <i
-                    aria-hidden="true"
-                    className="search icon"
-                    ></i>
-                </div>
-            </div>
 
             <div className="right menu item">
                 <div className="ui primary button" onClick={this.onClick}>

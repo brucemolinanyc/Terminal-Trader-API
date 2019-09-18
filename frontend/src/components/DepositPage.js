@@ -20,7 +20,7 @@ class DepositPage extends React.Component{
   
     handleSubmit = (e) => {
         e.preventDefault()
-        const amount = this.state.amount
+        const amount = Math.round(this.state.amount)
         const api_key = localStorage.getItem('api_key')
 
         fetch(baseURL + `/api/${api_key}/deposit`, {

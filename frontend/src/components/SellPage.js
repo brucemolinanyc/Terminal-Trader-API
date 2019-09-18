@@ -1,7 +1,5 @@
 import React from 'react';
 import Navigation from './Navigation';
-import { Input } from 'semantic-ui-react';
-import jwt_decode from 'jwt-decode';
 import  baseURL from '../util/utilities'
 // const baseURL = ''
 
@@ -42,8 +40,8 @@ class SellPage extends React.Component{
 
     onStockInputClick = (e) => {
         e.preventDefault()
-        fetch(`https://api.iextrading.com/1.0/stock/${this.state.ticker}/previous`)
-        .then(response => response.status == 404 ? this.setState({error: true}) : response.json()
+        fetch(`https://cloud.iexapis.com/stable/stock/${this.state.ticker}/quote?token=pk_246dc82381254e7ebc9498406cfd5e31`)
+        .then(response => response.status === 404 ? this.setState({error: true}) : response.json()
         .then(data => this.setState({symbol: data}))
         )}
 
@@ -51,7 +49,7 @@ class SellPage extends React.Component{
         e.preventDefault()
         const api_key = localStorage.getItem('api_key')
         let ticker = this.state.ticker
-        let amount = Number(this.state.amount)
+        let amount = Math.round(Number(this.state.amount))
        
         if (Number.isInteger(amount)){
                 fetch(baseURL + `/api/${api_key}/sell/${ticker}/${amount}`, {
@@ -64,7 +62,7 @@ class SellPage extends React.Component{
                 }).then(response => response.json())
                 .then(data => {
                     if (data.balance){
-                        this.setState({balance: data.balance, error: false})
+                        this.setState({balance: Math.round(data.balance), error: false})
                     } else if (data.error){
                         this.setState({error: true})
                         }
@@ -76,12 +74,12 @@ class SellPage extends React.Component{
        
     
     render(){
-        let {symbol, date, open, high, low} = this.state.symbol
+        let {symbol, latestTime, latestPrice} = this.state.symbol
 
         const positions = this.state.positions && this.state.positions.map( (el, idx) => {
             const key = Object.keys(el)
                 if(el[key].shares > 0){
-                    return <div className="positions" >
+                    return <div key={idx} className="positions" >
                                 <div className="content">
                                     <div className="header">stock: &nbsp;<strong><font color="blue">{el[key].ticker}</font></strong></div>
                                     <div className="meta">amount: &nbsp;<strong><font color="green">{el[key].shares}</font></strong></div>
@@ -93,13 +91,13 @@ class SellPage extends React.Component{
         const stock_result = this.state.symbol && 
             <div className="stockResult">
                 {symbol}<br></br>
-                Open: {open}, High: {high}, Low: {low} <br></br>
-                Live as of: {date}
+                StockPrice: ${Math.round(latestPrice)} <br></br>
+                Live as of: {latestTime}
             </div>
 
         const success = this.state.error === false &&
             <div className="success">
-               <p>Your Stock sale was successful. Your balance is now ${this.state.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
+               <p>Your Stock sale was successful. Your balance is now ${Math.round(this.state.balance)}</p>
             </div>
         
         const failure = this.state.error === true &&
@@ -122,13 +120,13 @@ class SellPage extends React.Component{
                             {stock_result}
                             {positions}
                             <br></br>
-                            <div class="ui input">
+                            <div className="ui input">
                                 <input type="text" placeholder="Enter amount to sell" onChange={this.onPurchaseInputChange} />
                             </div>
                             <br></br><br></br>
 
                             <div>
-                               { this.state.amount && <p>Confirm sale of {this.state.amount} shares of {symbol} for ${this.state.amount && Number((this.state.amount * open).toFixed(2))} </p>} 
+                               { this.state.amount && <p>Confirm sale of {this.state.amount} shares of {symbol} for ${this.state.amount && Math.round(Number((this.state.amount * latestPrice)))} </p>} 
                             </div>
 
                             <div className="button">
@@ -146,3 +144,6 @@ class SellPage extends React.Component{
 }
 
 export default SellPage;
+
+//removing decimals
+// <p>Your Stock sale was successful. Your balance is now ${this.state.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>

@@ -51,8 +51,6 @@ class LoginPage extends React.Component{
   render(){
     
     return(
-
-
       <div className='login-form'>
       {/*
         Heads up! The styles below are necessary for the correct render of this example.
