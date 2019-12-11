@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-venv_setup_commands.txt
+*.venv_setup_commands.txt
 # C extensions
 *.so
 
